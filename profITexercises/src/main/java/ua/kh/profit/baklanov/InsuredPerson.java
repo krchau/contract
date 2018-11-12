@@ -76,6 +76,6 @@ public class InsuredPerson {
     public String initials()
     {
         StringBuffer sb = new StringBuffer();
-        return sb.append(lastName).append(" ").append(firstName.charAt(0)).append(". ").append(patronymic.charAt(0)).append(". ").toString();
+        return sb.append(lastName).append(" ").append(firstName.charAt(0)).append(". ").append(patronymic.charAt(0)).append(".").toString();
     }
 }
