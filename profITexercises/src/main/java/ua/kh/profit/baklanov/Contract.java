@@ -84,7 +84,7 @@ public class Contract {
     }
 
     //adding new
-    private void add() {
+    public void add() {
         if (this.client.isHuman()) {
             this.listOfInsuredPersons.add(new InsuredPerson("SimpleHumanName", "SimpleHumanSurname","SimpleHumanPatronymic",setDate(1999,2,3),100, 1));
             this.listOfInsuredPersons.add(new InsuredPerson("SimpleHumanName", "ItisSimpleHumanSurname","SimpleHumanPatronymic",setDate(1995,2,3), 100,2));
@@ -98,7 +98,7 @@ public class Contract {
         }
     }
 
-    private int sumFor() {
+    public int sumFor() {
         int sum=0;
         for (int i=0;i<listOfInsuredPersons.size();i++) {
             sum+=listOfInsuredPersons.get(i).getPrice();
@@ -107,16 +107,16 @@ public class Contract {
         return sum;
     }
 
-    private int sumIterator() {
+    public int sumIterator() {
         int sum=0;
         for (Iterator<InsuredPerson> i = listOfInsuredPersons.iterator(); i.hasNext();) {
 
-           sum+=i.next().getPrice();
+            sum+=i.next().getPrice();
         }
         return sum;
     }
 
-    private int sumForEach() {
+    public int sumForEach() {
         int sum=0;
         for (InsuredPerson temp : listOfInsuredPersons) {
             sum+=temp.getPrice();
@@ -124,12 +124,12 @@ public class Contract {
         return sum;
     }
 
-    private int sumLambda() {
+    public int sumLambda() {
         int sum = listOfInsuredPersons.stream().mapToInt(value -> value.getPrice()).sum();
         return sum;
     }
 
-    private ArrayList<InsuredPerson> sortFullName(ArrayList listOfInsuredPersons)
+    private ArrayList<InsuredPerson> sortLastName(ArrayList listOfInsuredPersons)
     {
         Collections.sort(listOfInsuredPersons, new Comparator<InsuredPerson>() {
             public int compare(InsuredPerson o1, InsuredPerson o2) {
@@ -151,13 +151,16 @@ public class Contract {
         return listOfInsuredPersons;
     }
 
-    private void search( int id)
+    public String search( int id)
     {
+        String result="";
         for (InsuredPerson temp : listOfInsuredPersons) {
             if (temp.getId() == id) {
+                result=temp.getLastName();
                 System.out.println("Result of search: " + temp.initials());
             }
         }
+        return result;
     }
 
 
@@ -165,25 +168,22 @@ public class Contract {
     {
         Contract humanContract= new Contract(1,setDate(2019,2,3),setDate(2019,5,6),getCurrentDate(), new Client(true, "Alex Baklanov", "Dom"));
         Contract companyContract= new Contract(2,setDate(2019,1,28),setDate(2019,12,23),getCurrentDate(), new Client(false, "My Company", "NeDom"));
-        char addOrNo='X';
-        while (addOrNo =='Y' ||addOrNo =='y' || addOrNo =='X') {
-            Scanner in = new Scanner(System.in);
-            System.out.print("Add insured person?(Y/N)");
-            addOrNo = in.next().charAt(0);
-            if (addOrNo == 'Y' || addOrNo=='y') {
-                humanContract.add();
-                companyContract.add();
-            } else if (addOrNo == 'N'||addOrNo=='n') {
-                humanContract.outputInfoAboutContract(humanContract);
-                humanContract.outputInfoAboutContract(companyContract);
-            }
-        }
-        humanContract.sortFullName(humanContract.listOfInsuredPersons);
+        humanContract.add();
+        companyContract.add();
+        humanContract.outputInfoAboutContract(humanContract);
+        humanContract.outputInfoAboutContract(companyContract);
+        System.out.println("Sorted by last name:");
+        humanContract.sortLastName(humanContract.listOfInsuredPersons);
         humanContract.outputListOfInsuredPersonsNames(humanContract);
+        System.out.println("\n");
+        System.out.println("Sorted by last name with lambda:");
         humanContract.sortFullNameLambda(humanContract.listOfInsuredPersons);
         humanContract.outputListOfInsuredPersonsNames(humanContract);
+        System.out.println("\n");
+        System.out.println("Sorted by date of birth:");
         humanContract.sortDateOfBirthLambda(humanContract.listOfInsuredPersons);
         humanContract.outputListOfInsuredPersonsDateOfBirth(humanContract);
+        System.out.println("\n");
         humanContract.search(10);
 
     }
@@ -200,7 +200,7 @@ public class Contract {
     }
 
     private static LocalDate setDate(int year, int month, int day) {
-        LocalDate date = null;
+        LocalDate date;
         try {
             date = LocalDate.of(year, month, day);
         }
