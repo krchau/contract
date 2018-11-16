@@ -1,4 +1,5 @@
-package ua.kh.baklanov;
+package ua.kh.profit.baklanov;
+
 
 public class Client {
 
@@ -10,15 +11,18 @@ public class Client {
 
     public Client(boolean isHuman, String fullNameOrNameOfOrg, String address) {
 
-        if (isHuman==true) {
+        if (isHuman == true) {
 
-           this.fullName=fullNameOrNameOfOrg;
-       }
-       else {
-           this.nameOfOrg=fullNameOrNameOfOrg;
-       }
-        this.isHuman=isHuman;
-        this.address=address;
+            this.fullName = fullNameOrNameOfOrg;
+        } else {
+            this.nameOfOrg = fullNameOrNameOfOrg;
+        }
+        this.isHuman = isHuman;
+        this.address = address;
+    }
+
+    public Client() {
+
     }
 
 
@@ -53,6 +57,5 @@ public class Client {
     public void setAddress(String address) {
         this.address = address;
     }
-
-
 }
+
