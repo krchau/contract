@@ -57,7 +57,7 @@ public class CRUDTest {
             fail(e.toString());
         }
     }
-
+            /* reading contract with id=1 */
     @Test
     public void read() {
         try {
@@ -70,7 +70,7 @@ public class CRUDTest {
     }
 
 
-
+            /* updating contract №2 and update insured person №10 in this contract */
     @Test
     public void update() {
         Contract contract=(Contract) crud.read(ETALON_UPDATEID);
@@ -82,6 +82,7 @@ public class CRUDTest {
         assertNotEquals(contract,updateContract);
     }
 
+            /* deleting contract with id №3 */
     @Test
     public void delete() {
         final long EXPECTED = 0;
