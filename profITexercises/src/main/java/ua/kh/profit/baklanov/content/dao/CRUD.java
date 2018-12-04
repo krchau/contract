@@ -64,12 +64,12 @@ public class CRUD implements IDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                contract.setId((int) resultSet.getLong(1));
-                contract.setDateOfStart(resultSet.getDate(2).toLocalDate());
-                contract.setDateOfFinish(resultSet.getDate(3).toLocalDate());
-                contract.setConclusionDate(resultSet.getDate(4).toLocalDate());
-                contract.setTypeOfPerson(TypeOfPerson.valueOf(resultSet.getString(5)));
-                contract.setPerson(TypeOfPerson.valueOf(resultSet.getString(5)).getContract(resultSet.getString(6),resultSet.getString(7)));
+                contract.setId((int) resultSet.getLong("idContract"));
+                contract.setDateOfStart(resultSet.getDate("dateOfStart").toLocalDate());
+                contract.setDateOfFinish(resultSet.getDate("dateOfFinish").toLocalDate());
+                contract.setConclusionDate(resultSet.getDate("conclusionDate").toLocalDate());
+                contract.setTypeOfPerson(TypeOfPerson.valueOf(resultSet.getString("type")));
+                contract.setPerson(TypeOfPerson.valueOf(resultSet.getString("type")).getContract(resultSet.getString("name"),resultSet.getString("address")));
             }
             resultSet.close();
             try(PreparedStatement preparedStatement=connection.prepareStatement(SELECT_QUERY_INSURED)) {
@@ -77,12 +77,12 @@ public class CRUD implements IDao {
                 ResultSet resultSet2 = preparedStatement.executeQuery();
                 while (resultSet2.next()) {
                 InsuredPerson insuredPerson=new InsuredPerson(
-                        resultSet2.getString(1),
-                        resultSet2.getString(2),
-                        resultSet2.getString(3),
-                        resultSet2.getDate(4).toLocalDate(),
-                        (int)resultSet2.getLong(5),
-                        (int)resultSet2.getLong(6));
+                        resultSet2.getString("firstName"),
+                        resultSet2.getString("lastName"),
+                        resultSet2.getString("patronymic"),
+                        resultSet2.getDate("dateOfBirth").toLocalDate(),
+                        (int)resultSet2.getLong("price"),
+                        (int)resultSet2.getLong("Contract_idContract"));
                 contract.add(insuredPerson);
                 }
                 resultSet2.close();
